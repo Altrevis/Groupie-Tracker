@@ -38,40 +38,68 @@
           <h3>-- Prenez du plaisir tout en vous amusant ! --</h3>
         </div>
     </header>
-      <h1>Artists</h1>
-      <div id="artists"></div>
+    <div class="content">
+      <h1>Groupie Tracker</h1>
+      <p>Bienvenue dans Groupie Tracker, découvrez les artistes ou effectuer votre propre recherche !</p>
+      <div class="btn-group">
+          <a href="#sort" class="color1">Découvrir les artistes !</a>
+      </div>
+  </div>
 
-      <h1>Locations</h1>
-      <div id="locations"></div>
+  <!--Création d'un filtre pour les artistes, dates de création du groupe, dates de sortie du premier album ...-->
+  <div id="sort">
+    <div class="sort-by-date">
+        <p>Création du groupe : </p>
+        <label>  Entre </label>
+        <div class="min" id="mini"></div>
+        <label>  et </label>
+        <div class="max" id="maxi"></div>
+    </div>
 
-      <h1>Dates</h1>
-      <div id="dates"></div>
+    <div class="exp">
+        <div class="sort-by-nbrOfMembers">
+            <p>Nombre de membres dans le groupe : </p>
+            <div class="checkbox" id="MemberSort"></div>
+        </div>
+    </div>
 
-      <h1>Relation</h1>
-      <div id="relation"></div>
-      <script>
-        $(document).ready(function() {
-            function loadData(endpoint, containerId) {
-                $.ajax({
-                    url: endpoint,
-                    type: "GET",
-                    success: function(data) {
-                        // Mettez à jour le contenu du conteneur avec les données récupérées
-                        $("#" + containerId).html(JSON.stringify(data));
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error:", error);
-                        // Affichez une erreur si la requête échoue
-                        $("#" + containerId).html("Failed to load data");
-                    }
-                });
-            }
-            // Chargez les données pour chaque endpoint et affichez-les dans les div correspondantes
-            loadData("https://groupietrackers.herokuapp.com/api/artists", "artists");
-            loadData("https://groupietrackers.herokuapp.com/api/locations", "locations");
-            loadData("https://groupietrackers.herokuapp.com/api/dates", "dates");
-            loadData("https://groupietrackers.herokuapp.com/api/relation", "relation");
-        });
-    </script>
+    <div class="sort-by-date-FirstAlbulm">
+        <p>Date de sortie du 1er albulm : </p>
+        <input type="range" id="input-range" class="range" min="1958" max="2021" value="2021" onchange="show()">
+        <p> Entre 1958 et <span id="dateOutput"></span></p>
+    </div>
+
+    <div id="PageChoosing"></div>
+  </div>
+
+  <!-- Contenu des cartes pour les artistes -->
+  <div class="container">
+    <div class="heading">
+        <h1 id="resultat">Résultats : </h1>
+    </div>
+    <div class="row" id="card-data">
+
+    </div>
+  </div>
+
+  <!-- Création de pop-up -->
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status" id="loading">
+        <div class="popup-box">
+            <div class="popup-content">
+                <div class="popup-header">
+
+                </div>
+                <div class="popup-body">
+
+                </div>
+                <div class="popup-footer">
+                    <button class="popup-close-btn">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+      <script src="../visuel/js/index.js"></script>
 </body>
 </html>
