@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groupie-Tracker</title>
-    <link href="../visuel/css/index.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goupie Tracker</title>
+  <link href="https://fonts.googleapis.com/css?family=Nova+Round&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+  <script src="https://cdn.lordicon.com//libs/frhvbuzj/lord-icon-2.0.2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -313,7 +317,41 @@ article{
           <h1>Concert De </h1>
           <h3>-- Prenez du plaisir tout en vous amusant ! --</h3>
         </div>
-      </header>
-    <script src="../visuel/js/index.js"></script>
+    </header>
+      <h1>Artists</h1>
+      <div id="artists"></div>
+
+      <h1>Locations</h1>
+      <div id="locations"></div>
+
+      <h1>Dates</h1>
+      <div id="dates"></div>
+
+      <h1>Relation</h1>
+      <div id="relation"></div>
+      <script>
+        $(document).ready(function() {
+            function loadData(endpoint, containerId) {
+                $.ajax({
+                    url: endpoint,
+                    type: "GET",
+                    success: function(data) {
+                        // Mettez à jour le contenu du conteneur avec les données récupérées
+                        $("#" + containerId).html(JSON.stringify(data));
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error);
+                        // Affichez une erreur si la requête échoue
+                        $("#" + containerId).html("Failed to load data");
+                    }
+                });
+            }
+            // Chargez les données pour chaque endpoint et affichez-les dans les div correspondantes
+            loadData("https://groupietrackers.herokuapp.com/api/artists", "artists");
+            loadData("https://groupietrackers.herokuapp.com/api/locations", "locations");
+            loadData("https://groupietrackers.herokuapp.com/api/dates", "dates");
+            loadData("https://groupietrackers.herokuapp.com/api/relation", "relation");
+        });
+    </script>
 </body>
 </html>
