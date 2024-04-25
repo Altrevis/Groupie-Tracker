@@ -7,6 +7,8 @@
     font-style: normal;
 }
 
+/* ZONE GENERAL */
+
 body {
   background: #000000;
   font-family: 'Roboto', sans-serif;
@@ -53,6 +55,8 @@ h4{
   color: #f8b700;
   margin-bottom: 0.8em;
 }
+
+/* ZONE NAVBAR / HEROBANNER */
 
 header{
   height: 80vh;
@@ -275,5 +279,121 @@ article{
 @media (max-width: 500px) {
   .navbar-container input[type="checkbox"]:checked ~ .logo {
     display: none;
+  }
+}
+
+/* ZONE API STYLE */
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Styles pour la section de tri */
+#sort {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sort-by-date,
+.sort-by-nbrOfMembers,
+.sort-by-date-FirstAlbulm {
+  margin-bottom: 20px;
+}
+
+.sort-by-date p,
+.sort-by-nbrOfMembers p,
+.sort-by-date-FirstAlbulm p {
+  font-weight: bold;
+  margin: 0 0 5px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+/* Styles pour les cartes d'artistes */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  flex-basis: calc(33.33% - 20px);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+/* Styles pour le pop-up */
+.spinner-border {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.popup-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.popup-close-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-close-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .card {
+      flex-basis: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+      flex-basis: 100%;
   }
 }

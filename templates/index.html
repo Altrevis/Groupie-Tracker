@@ -47,59 +47,65 @@
   </div>
 
   <!--Création d'un filtre pour les artistes, dates de création du groupe, dates de sortie du premier album ...-->
-  <div id="sort">
-    <div class="sort-by-date">
-        <p>Création du groupe : </p>
-        <label>  Entre </label>
-        <div class="min" id="mini"></div>
-        <label>  et </label>
-        <div class="max" id="maxi"></div>
-    </div>
-
-    <div class="exp">
-        <div class="sort-by-nbrOfMembers">
-            <p>Nombre de membres dans le groupe : </p>
-            <div class="checkbox" id="MemberSort"></div>
+  <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Titre</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="sort">
+        <div class="sort-by-date">
+            <p>Création du groupe :</p>
+            <label>Entre</label>
+            <div class="min" id="mini"></div>
+            <label>et</label>
+            <div class="max" id="maxi"></div>
         </div>
+
+        <div class="exp">
+            <div class="sort-by-nbrOfMembers">
+                <p>Nombre de membres dans le groupe :</p>
+                <div class="checkbox" id="MemberSort"></div>
+            </div>
+        </div>
+
+        <div class="sort-by-date-FirstAlbulm">
+            <p>Date de sortie du 1er album :</p>
+            <input type="range" id="input-range" class="range" min="1958" max="2021" value="2021" onchange="show()">
+            <p>Entre 1958 et <span id="dateOutput"></span></p>
+        </div>
+
+        <div id="PageChoosing"></div>
     </div>
 
-    <div class="sort-by-date-FirstAlbulm">
-        <p>Date de sortie du 1er albulm : </p>
-        <input type="range" id="input-range" class="range" min="1958" max="2021" value="2021" onchange="show()">
-        <p> Entre 1958 et <span id="dateOutput"></span></p>
+    <!-- Contenu des cartes pour les artistes -->
+    <div class="container">
+        <div class="heading">
+            <h1 id="resultat">Résultats :</h1>
+        </div>
+        <div class="row" id="card-data"></div>
     </div>
 
-    <div id="PageChoosing"></div>
-  </div>
-
-  <!-- Contenu des cartes pour les artistes -->
-  <div class="container">
-    <div class="heading">
-        <h1 id="resultat">Résultats : </h1>
-    </div>
-    <div class="row" id="card-data">
-
-    </div>
-  </div>
-
-  <!-- Création de pop-up -->
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status" id="loading">
-        <div class="popup-box">
-            <div class="popup-content">
-                <div class="popup-header">
-
-                </div>
-                <div class="popup-body">
-
-                </div>
-                <div class="popup-footer">
-                    <button class="popup-close-btn">Fermer</button>
+    <!-- Création de pop-up -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" id="loading">
+            <div class="popup-box">
+                <div class="popup-content">
+                    <div class="popup-header"></div>
+                    <div class="popup-body"></div>
+                    <div class="popup-footer">
+                        <button class="popup-close-btn">Fermer</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
+</body>
+</html>
+
       <script src="../visuel/js/index.js"></script>
 </body>
 </html>
