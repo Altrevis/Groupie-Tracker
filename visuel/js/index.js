@@ -47,7 +47,7 @@ function show(dataArtist) { // Affiche les données des artistes
                     <li><h4>Premier album :</h4><br>${match.firstAlbum}</li>
                 </ul>
                 <div class="popup-header-cont">
-                    <h3>${match.name}</h3>
+                    <h3${match.name}</h3>
                 </div>
                 <div class="read-more-cont">
                     <p class="relation" data-url="${match.relations}">...</p>
