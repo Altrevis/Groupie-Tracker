@@ -1,6 +1,6 @@
 package dto
 
-import "../model"
+import "../API"
 
 type Artist struct {
 	Id int64 `json:"id"`
