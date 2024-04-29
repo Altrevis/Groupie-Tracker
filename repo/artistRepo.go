@@ -1,16 +1,15 @@
 package repository
 
 import (
-	"../API"
 	"encoding/json"
 	"fmt"
+	"../API"
 	"net/http"
 	"strconv"
 	"time"
 )
 
 const artistsUrl string = "https://groupietrackers.herokuapp.com/api/artists"
-
 var client = &http.Client{}
 
 func GetArtists() ([]API.Artist, error) {
@@ -19,16 +18,18 @@ func GetArtists() ([]API.Artist, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return artists, nil
 }
 
-func GetArtistById(id int) (*API.Artist, error) {
+func GetArtistById(id int)  (*API.Artist, error) {
 	artist := &API.Artist{}
 
-	err := get(artistsUrl+"/" + strconv.Itoa(id), &artist)
+	err := get(artistsUrl + "/" + strconv.Itoa(id), &artist)
 	if err != nil {
 		return nil, err
 	}
+
 	return artist, nil
 }
 
@@ -43,6 +44,7 @@ func get(url string, target interface{}) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
