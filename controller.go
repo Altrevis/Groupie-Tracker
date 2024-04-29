@@ -1,63 +1,11 @@
-package controller
+package main
 
 import (
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"net/http"
 	"strings"
 )
-
-func Accueil(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path != "/" {
-		codeErreur(w, r, 404, "Page not found")
-		return
-	}
-
-	custTemplate, err := template.ParseFiles("./templates/index.html")
-
-	if err != nil {
-		codeErreur(w, r, 500, "Template not found : index.html")
-		return
-	}
-
-	err = custTemplate.Execute(w, nil)
-}
-
-func Map(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path != "/map" {
-		codeErreur(w, r, 404, "Page not found")
-		return
-	}
-
-	custTemplate, err := template.ParseFiles("./templates/map.html")
-
-	if err != nil {
-		codeErreur(w, r, 500, "Template not found : map.html")
-		return
-	}
-
-	err = custTemplate.Execute(w, nil)
-}
-
-func Search(w http.ResponseWriter, r *http.Request) {
-
-	if r.URL.Path != "/search" {
-		codeErreur(w, r, 404, "Page not found")
-		return
-	}
-
-	custTemplate, err := template.ParseFiles("./templates/search.html")
-
-	if err != nil {
-		codeErreur(w, r, 500, "Template not found : search.html")
-		return
-	}
-
-	err = custTemplate.Execute(w, nil)
-}
 
 func loadApi(w http.ResponseWriter, r *http.Request, endpoint string) {
 	tab := [4]string{"artists", "locations", "dates", "relation"}
@@ -94,24 +42,24 @@ func loadApi(w http.ResponseWriter, r *http.Request, endpoint string) {
 	w.Write(responseData)
 }
 
-func Artists(w http.ResponseWriter, r *http.Request) {
+func artistsHandler(w http.ResponseWriter, r *http.Request) {
 	loadApi(w, r, "artists")
 }
 
-func Locations(w http.ResponseWriter, r *http.Request) {
+func locationsHandler(w http.ResponseWriter, r *http.Request) {
 	loadApi(w, r, "locations")
 }
 
-func Dates(w http.ResponseWriter, r *http.Request) {
+func datesHandler(w http.ResponseWriter, r *http.Request) {
 	loadApi(w, r, "dates")
 }
 
-func Relation(w http.ResponseWriter, r *http.Request) {
-	loadApi(w, r, "relation")
+func relationHandler(w http.ResponseWriter, r *http.Request) {
+	pathPart := strings.Split(r.URL.Path, "/")
+	getId(w, r, pathPart[len(pathPart)-1])
 }
 
 func getId(w http.ResponseWriter, r *http.Request, id string) {
-
 	response, err := http.Get("https://groupietrackers.herokuapp.com/api/relation/" + id)
 
 	if err != nil {
@@ -130,12 +78,7 @@ func getId(w http.ResponseWriter, r *http.Request, id string) {
 	w.Write(responseData)
 }
 
-func RelationData(w http.ResponseWriter, r *http.Request) {
-	pathPart := strings.Split(r.URL.Path, "/")
-	getId(w, r, pathPart[len(pathPart)-1])
-}
-
-func codeErreur(w http.ResponseWriter, r *http.Request, status int, message string) {
+func codeErreur(w http.ResponseWriter, _ *http.Request, status int, message string) {
 
 	if status == 404 {
 		http.Error(w, "404 not found", http.StatusNotFound)
@@ -151,3 +94,4 @@ func codeErreur(w http.ResponseWriter, r *http.Request, status int, message stri
 	}
 
 }
+
