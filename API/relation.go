@@ -1,4 +1,4 @@
-package model
+package API
 
 type Index struct {
 	Relation []Relation `json:"index"`

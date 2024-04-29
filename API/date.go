@@ -1,4 +1,4 @@
-package model
+package API
 
 type Date struct {
 	Id uint64 `json:"id"`

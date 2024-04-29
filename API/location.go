@@ -1,4 +1,4 @@
-package model
+package API
 
 type Location struct {
 	Id uint64 `json:"id"`

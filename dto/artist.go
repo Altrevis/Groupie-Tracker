@@ -10,9 +10,9 @@ type Artist struct {
     CreationDate uint16 `json:"creationDate"`
     FirstAlbum string `json:"firstAlbum"`
 
-    Location model.Location `json:"locations"`
+    Location API.Location `json:"locations"`
 
-    ConcertDates model.Date `json:"concertDates"`
+    ConcertDates API.Date `json:"concertDates"`
 
-    Relations model.Relation `json:"relations"`
+    Relations API.Relation `json:"relations"`
 }

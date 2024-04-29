@@ -1,4 +1,4 @@
-package model
+package API
 
 type Artist struct {
 	Id int64 `json:"id"`
