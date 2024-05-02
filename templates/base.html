@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Groupie Trackers</title>
+    <title>Document</title>
 </head>
 <body>
-    
+
+    <div id="listeArtistes"></div>
+
+    <script>
+        // Fonction pour envoyer une requête à API et afficher la liste des artistes
+        function obtenirArtistes() {
+            fetch('/artist') // Envoyer une requête GET au serveur pour obtenir la liste des artistes
+                .then(response => response.json()) // Convertir la réponse en format JSON
+                .then(artistes => {
+                    // Effacer le contenu de la div où la liste des artistes sera affichée
+                    document.getElementById('listeArtistes').innerHTML = '';
+
+                    // Parcourir la liste des artistes obtenue et les afficher sur la page
+                    artistes.forEach(artiste => {
+                        // Créer un élément pour afficher les informations de l'artiste
+                        const elementArtiste = document.createElement('div');
+                        elementArtiste.innerHTML = `
+                            <h2>${artiste.name}</h2>
+                            <img src="${artiste.image}" alt="${artiste.name}">
+                            <!-- Autres données sur l'artiste que vous voulez afficher -->
+                        `;
+                        // Ajouter l'élément créé à la liste des artistes sur la page
+                        document.getElementById('listeArtistes').appendChild(elementArtiste);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des artistes :', error)); // Gérer les erreurs
+        }
+
+        // Appeler la fonction pour obtenir et afficher la liste des artistes lorsque la page est chargée
+        window.onload = obtenirArtistes;
+    </script>
+
 </body>
 </html>
