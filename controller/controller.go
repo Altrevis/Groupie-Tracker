@@ -12,7 +12,7 @@ import (
 func handle404(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(404)
 
-	t, err := template.ParseFiles("templates/base.html")
+	t, err := template.ParseFiles("templates/index.html")
 
 	if err != nil {
 		handle500(w, err)
@@ -30,7 +30,7 @@ func handle404(w http.ResponseWriter, r *http.Request) {
 func handle400(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(400)
 
-	t, err := template.ParseFiles("templates/base.html")
+	t, err := template.ParseFiles("templates/index.html")
 
 	if err != nil {
 		handle500(w, err)
@@ -48,7 +48,7 @@ func handle400(w http.ResponseWriter, r *http.Request) {
 func handle500(w http.ResponseWriter, err error) {
 	w.WriteHeader(500)
 
-	t, other := template.ParseFiles("templates/base.html")
+	t, other := template.ParseFiles("templates/index.html")
 
 	if other != nil {
 		w.Write([]byte("Something went wrong\nError 500\n" + other.Error()))
@@ -77,7 +77,7 @@ func Get(w http.ResponseWriter, r *http.Request) {
 
 		artist, err := service.GetArtistById(idArtist)
 
-		t, err := template.ParseFiles("templates/base.html", "templates/artist.html")
+		t, err := template.ParseFiles("templates/index.html", "templates/artist.html")
 		if err != nil {
 			handle400(w, r)
 			return
@@ -93,7 +93,7 @@ func Get(w http.ResponseWriter, r *http.Request) {
 
 func MainPage(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
-		t, err := template.ParseFiles("templates/base.html", "templates/home.html")
+		t, err := template.ParseFiles("templates/index.html", "templates/home.html")
 
 		if err != nil {
 			handle500(w, err)
