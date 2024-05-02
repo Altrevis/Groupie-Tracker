@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("visuel"))
+	http.Handle("/visuel/", http.StripPrefix("/visuel/", fs))
 
 	http.HandleFunc("/", controller.MainPage)
 	http.HandleFunc("/artist/", controller.Get)
