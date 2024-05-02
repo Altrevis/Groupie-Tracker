@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Get récupère la liste des artistes avec leurs détails depuis le repository
 func Get() ([]dto.Artist, error) {
 	artists, err := repository.GetArtists()
 	if err != nil {
@@ -20,6 +21,7 @@ func Get() ([]dto.Artist, error) {
 	return dtoArtists, nil
 }
 
+// GetArtistById récupère un artiste spécifique par son ID avec ses détails depuis le repository
 func GetArtistById(id int) (*dto.Artist, error) {
 	artist, err := repository.GetArtistById(id)
 	if err != nil {
@@ -33,6 +35,7 @@ func GetArtistById(id int) (*dto.Artist, error) {
 	return dtoArtist, nil
 }
 
+// createDto crée un DTO (Data Transfer Object) à partir d'un artiste API avec ses détails
 func createDto(artist API.Artist) (*dto.Artist, error) {
 	var err error
 	dtoArtist := &dto.Artist{}
@@ -58,6 +61,7 @@ func createDto(artist API.Artist) (*dto.Artist, error) {
 	return dtoArtist, nil
 }
 
+// parallel récupère de manière asynchrone les détails de localisation, dates de concert et relations pour un artiste
 func parallel(a API.Artist, chanArt chan<- dto.Artist) {
 	chanLoc := make(chan API.Location)
 	chanDate := make(chan API.Date)
@@ -96,6 +100,7 @@ func parallel(a API.Artist, chanArt chan<- dto.Artist) {
 	chanArt <- dtoArtist
 }
 
+// createDtos crée des DTO pour tous les artistes donnés
 func createDtos(artists []API.Artist) ([]dto.Artist, error) {
 	var dtoArtists []dto.Artist
 	start := time.Now()
