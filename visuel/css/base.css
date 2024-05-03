@@ -259,5 +259,16 @@ body {
 
 #listeArtistes {
     column-count: 3;
-    margin-left: 10%;
+}
+
+.slot {
+  border: 5px solid #cccccc; /* Bordure de 2px solide grise */
+  padding: 6%; /* Espace intérieur de 10px autour du contenu */
+}
+
+.button {
+  border: 2px solid #cccccc; /* Bordure de 2px solide grise */
+  padding: 2%; /* Espace intérieur de 10px autour du contenu */
+  background-color: #0ac2f9;
+  color: #f8b700;
 }

@@ -64,40 +64,48 @@ func handle500(w http.ResponseWriter, err error) {
 
 // Get gère les requêtes GET
 func Get(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/artist/"):]
-	if len(id) == 0 {
-		w.Header().Set("Content-Type", "application/json")
-		if err := getArtists(w); err != nil {
-			handle500(w, err)
-			return
-		}
-	} else {
-		idArtist, err := strconv.Atoi(id)
-		if err != nil {
-			handle404(w, r)
-			return
-		}
+    id := r.URL.Path[len("/artist/"):]
+    if len(id) == 0 {
+        w.Header().Set("Content-Type", "application/json")
+        if err := getArtists(w); err != nil {
+            handle500(w, err)
+            return
+        }
+    } else {
+        idArtist, err := strconv.Atoi(id)
+        if err != nil {
+            handle404(w, r)
+            return
+        }
 
-		artist, err := service.GetArtistById(idArtist)
+        if r.Method == "GET" {
+            artist, err := service.GetArtistById(idArtist)
+            if err != nil {
+                handle500(w, err)
+                return
+            }
+            t, err := template.ParseFiles("templates/base.html", "templates/artist.html")
+            if err != nil {
+                handle400(w, r)
+                return
+            }
 
-		t, err := template.ParseFiles("templates/base.html", "templates/artist.html")
-		if err != nil {
-			handle400(w, r)
-			return
-		}
-
-		err = t.Execute(w, artist)
-		if err != nil {
-			handle400(w, r)
-			return
-		}
-	}
+            err = t.Execute(w, artist)
+            if err != nil {
+                handle400(w, r)
+                return
+            }
+        } else {
+            handle404(w, r)
+            return
+        }
+    }
 }
 
 // MainPage gère la page d'accueil
 func MainPage(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
-		t, err := template.ParseFiles("templates/base.html", "templates/index.html")
+		t, err := template.ParseFiles("templates/base.html")
 
 		if err != nil {
 			handle500(w, err)
