@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist Page</title>
+  <link rel="stylesheet" href="../visuel/css/artist.css">
+  <style>
+    /* Ajoutez vos styles personnalisés ici */
+  </style>
+</head>
+<body>
+  <div class="">
+    <a href="" class="">Back to home</a>
+    <h1 class="" id="artist-name"></h1>
+    <div class="">
+      <div class="">
+        <h2>Members</h2>
+        <ul id="members-list"></ul>
+        <h2>Creation Date</h2>
+        <p id="creation-date"></p>
+        <h2>First Album</h2>
+        <p id="first-album"></p>
+      </div>
+      <div class="">
+        <img src="" alt="" id="artist-image" class="" />
+      </div>
+      <div class="">
+        <ul class="" id="concert-dates">
+          <li class=""><h2>Concert Dates</h2></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Inscription</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="username">Nom</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Mail:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">S'inscrire</button>
+        </div>
+    </form>
+    <p>Vous recevrez un mail avec les tickets comme quoi vous vous êtes bien inscris, merci de votre participation.</p>
+   </div>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    });
+    // Données de l'artiste
+    const artistData = {
+      Name: "Nom de l'artiste",
+      Members: ["Membre 1", "Membre 2", "Membre 3", "Membre 4"],
+      CreationDate: "Date de création",
+      FirstAlbum: "Premier album",
+      Image: "URL de l'image",
+      Relations: {
+        DatesLocations: {
+          "Date 1": "Lieu 1",
+          "Date 2": "Lieu 2",
+          "Date 3": "Lieu 3",
+          "Date 4": "Lieu 4",
+        }
+      }
+    };
+
+    // Affichage des données de l'artiste
+    document.getElementById('artist-name').innerText = artistData.Name;
+
+    artistData.Members.forEach(member => {
+      const li = document.createElement('li');
+      li.innerText = member;
+      document.getElementById('members-list').appendChild(li);
+    });
+
+    document.getElementById('creation-date').innerText = artistData.CreationDate;
+    document.getElementById('first-album').innerText = artistData.FirstAlbum;
+    document.getElementById('artist-image').src = artistData.Image;
+
+    Object.entries(artistData.Relations.DatesLocations).forEach(([date, location]) => {
+      const li = document.createElement('li');
+      li.className = 'collection-item';
+      li.innerText = date;
+      const span = document.createElement('span');
+      span.className = 'secondary-content location';
+      span.innerText = location;
+      li.appendChild(span);
+      document.getElementById('concert-dates').appendChild(li);
+    });
+  </script>
+</body>
+</html>
