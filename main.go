@@ -12,5 +12,10 @@ func main() {
 
 	http.HandleFunc("/", controller.MainPage)
 	http.HandleFunc("/artist/", controller.Get)
+
+	http.HandleFunc("/artist.html", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "templates/artist.html")
+    })
+	
 	log.Fatal(http.ListenAndServe(":8081", nil))
 }
