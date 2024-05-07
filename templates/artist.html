@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<div class="">
+  <h1 class="">
+    {{.Name}}
+  </h1>
+  <div class="">
+    <div class="">
+      <h2>Members</h2>
+      <ul>
+        {{range .Members}}
+        <li>
+          <p class="">
+            {{.}}
+          </p>
+        </li>
+        {{end}}
+      </ul>
+
+      <h2>Creation Date</h2>
+      <p>
+        {{.CreationDate}}
+      </p>
+
+      <h2>First Album</h2>
+      <p>{{.FirstAlbum}}</p>
+    </div>
+    <div class="">
+      <img src="{{.Image}}" alt="{{.Name}}" class="" />
+    </div>
+
+    <div class="">
+      <ul class="">
+        <li class=""><h2>Concert Dates</h2></li>
+        {{range $date, $location := .Relations.DatesLocations}}
+        <li class="">
+          {{$date}}
+          <span class="">{{$location}}</span>
+        </li>
+        {{end}}
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>
