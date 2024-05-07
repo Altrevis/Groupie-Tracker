@@ -35,37 +35,7 @@
 
       <div id="listeArtistes"></div>
 
-    <script>
-        // Fonction pour envoyer une requête à API et afficher la liste des artistes
-        function obtenirArtistes() {
-            fetch('/artist') // Envoyer une requête GET au serveur pour obtenir la liste des artistes
-              .then(response => response.json()) // Convertir la réponse en format JSON
-              .then(artistes => {
-                    // Effacer le contenu de la div où la liste des artistes sera affichée
-                    document.getElementById('listeArtistes').innerHTML = '';
-
-                    // Parcourir la liste des artistes obtenue et les afficher sur la page
-                    artistes.forEach(artiste => {
-                        // Créer un élément pour afficher les informations de l'artiste
-                        const elementArtiste = document.createElement('div');
-                        // Ajouter la classe "slot" à l'élément
-                        elementArtiste.classList.add('slot');
-                        // Définir le contenu HTML de l'élément
-                        elementArtiste.innerHTML = `
-                            <h2>${artiste.name}</h2>
-                            <img src="${artiste.image}" alt="${artiste.name}">
-                            <a href="artist.html">voir plus</a>
-                        `;
-                        // Ajouter l'élément créé à la liste des artistes sur la page
-                        document.getElementById('listeArtistes').appendChild(elementArtiste);
-                    });
-                })
-              .catch(error => console.error('Erreur lors de la récupération des artistes :', error)); // Gérer les erreurs
-        }
-
-        // Appeler la fonction pour obtenir et afficher la liste des artistes lorsque la page est chargée
-        window.onload = obtenirArtistes;
-    </script>
+    <script src="../visuel/js/base.js"></script>
 
 </body>
 </html>
