@@ -1,43 +1,43 @@
-{{ define "content" }}
-<div class="container white black-text artist-page">
-  <a href="/" class="back-home green-text">&#10229; Back to home</a>
-  <h1 class="text-center">
-    {{.Name}}
-  </h1>
-  <div class="row">
-    <div class="col s12 m6">
-      <h2>Members</h2>
-      <ul>
-        {{range .Members}}
-        <li>
-          <p class="collection-item">
-            {{.}}
-          </p>
-        </li>
-        {{end}}
-      </ul>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Artiste</title>
+    <link rel="stylesheet" href="../visuel/css/base.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container container">
+                <h2>Groupie Tracker</h2>
+            </div>
+        </nav>
+    </header>
 
-      <h2>Creation Date</h2>
-      <p>
-        {{.CreationDate}}
-      </p>
+    <div class="artist-details">
+        <h1 id="artist-name"></h1>
+        <div class="image-container">
+            <img id="artist-image" src="" alt="Image de l'artiste">
+        </div>
+        <div>
+            <h3>Membres du groupe :</h3>
+            <ul id="members-list"></ul>
+        </div>
+        <div>
+            <h3>Date de création :</h3>
+            <p id="creation-date"></p>
+        </div>
+        <div>
+            <h3>Premier album :</h3>
+            <p id="first-album"></p>
+        </div>
+        <div>
+            <h3>Dates de concerts :</h3>
+            <ul id="concert-dates" class="collection"></ul>
+        </div>
+    </div>
 
-      <h2>First Album</h2>
-      <p>{{.FirstAlbum}}</p>
-    </div>
-    <div class="col s12 m6">
-      <img src="{{.Image}}" alt="{{.Name}}" class="artist-logo" />
-    </div>
-
-    <div class="col s12 white black-text">
-      <ul class="collection with-header">
-        <li class="collection-header"><h2>Concert Dates</h2></li>
-        {{range $date, $location := .Relations.DatesLocations}}
-        <li class="collection-item">
-          {{$date}}
-          <span class="secondary-content location">{{$location}}</span>
-        </li>
-        {{end}}
-      </ul>
-    </div>
-{{ end }}
+    <script src="../visuel/js/artist.js"></script>
+</body>
+</html>
