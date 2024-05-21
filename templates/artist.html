@@ -3,41 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails de l'Artiste</title>
     <link rel="stylesheet" href="../visuel/css/base.css">
+    <title>Groupie Tracker - Artiste</title>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="navbar-container container">
+                <input type="checkbox"/>
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+                <ul class="menu-items">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="#">#1</a></li>
+                    <li><a href="#">#2</a></li>
+                    <li><a href="#">#3</a></li>
+                </ul>
                 <h2>Groupie Tracker</h2>
             </div>
         </nav>
     </header>
-
-    <div class="artist-details">
-        <h1 id="artist-name"></h1>
-        <div class="image-container">
-            <img id="artist-image" src="" alt="Image de l'artiste">
-        </div>
+    <main>
         <div>
-            <h3>Membres du groupe :</h3>
+            <h1 id="artist-name"></h1>
+            <img id="artist-image" alt="Artist Image">
+            <p>Création: <span id="creation-date"></span></p>
+            <p>Premier Album: <span id="first-album"></span></p>
+            <h3>Membres</h3>
             <ul id="members-list"></ul>
+            <h3>Concerts</h3>
+            <ul id="concert-dates"></ul>
         </div>
-        <div>
-            <h3>Date de création :</h3>
-            <p id="creation-date"></p>
-        </div>
-        <div>
-            <h3>Premier album :</h3>
-            <p id="first-album"></p>
-        </div>
-        <div>
-            <h3>Dates de concerts :</h3>
-            <ul id="concert-dates" class="collection"></ul>
-        </div>
-    </div>
-
-    <script src="../visuel/js/artist.js"></script>
+    </main>
+    <script src="../visuel/js/base.js"></script>
 </body>
 </html>
