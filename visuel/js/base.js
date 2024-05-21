@@ -9,7 +9,7 @@ function obtenirArtistes() {
                 elementArtiste.innerHTML = `
                     <h2>${artiste.name}</h2>
                     <img src="${artiste.image}" alt="${artiste.name}">
-                    <a href="artist.html">voir plus</a>
+                    <a href="artist.html?id=${artiste.id}">voir plus</a>
                 `;
                 document.getElementById('listeArtistes').appendChild(elementArtiste);
             });
