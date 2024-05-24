@@ -1,9 +1,48 @@
 function obtenirArtistes() {
+    const creationDateMin = document.getElementById('creation-date-min').value;
+    const creationDateMax = document.getElementById('creation-date-max').value;
+    const firstAlbumDateMin = document.getElementById('first-album-date-min').value;
+    const firstAlbumDateMax = document.getElementById('first-album-date-max').value;
+    const membersMin = document.getElementById('members-min').value;
+    const membersMax = document.getElementById('members-max').value;
+    const locationCheckboxes = document.querySelectorAll('#locations-checkboxes input:checked');
+    const selectedLocations = Array.from(locationCheckboxes).map(cb => cb.value);
+
     fetch('/artist')
         .then(response => response.json())
         .then(artistes => {
+            const filteredArtistes = artistes.filter(artiste => {
+                const creationDate = artiste.creationDate;
+                const firstAlbumDate = new Date(artiste.firstAlbum).getFullYear();
+                const numberOfMembers = artiste.members.length;
+                const passesCreationDateFilter = (!creationDateMin || creationDate >= creationDateMin) &&
+                                                 (!creationDateMax || creationDate <= creationDateMax);
+                const passesFirstAlbumDateFilter = (!firstAlbumDateMin || firstAlbumDate >= firstAlbumDateMin) &&
+                                                   (!firstAlbumDateMax || firstAlbumDate <= firstAlbumDateMax);
+                const passesMembersFilter = (!membersMin || numberOfMembers >= membersMin) &&
+                                            (!membersMax || numberOfMembers <= membersMax);
+                const passesLocationFilter = selectedLocations.length === 0 || selectedLocations.some(location => artiste.locations.includes(location));
+
+                return passesCreationDateFilter && passesFirstAlbumDateFilter && passesMembersFilter && passesLocationFilter;
+            });
+            // Fonction pour initialiser les checkboxes de lieux de concerts (à appeler lors du chargement de la page)
+function initLocationCheckboxes(locations) {
+    const container = document.getElementById('locations-checkboxes');
+    locations.forEach(location => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = location;
+        const label = document.createElement('label');
+        label.textContent = location;
+        container.appendChild(checkbox);
+        container.appendChild(label);
+    });
+}
+// Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
+initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']);
+
             document.getElementById('listeArtistes').innerHTML = '';
-            artistes.forEach(artiste => {
+            filteredArtistes.forEach(artiste => {
                 const elementArtiste = document.createElement('div');
                 elementArtiste.classList.add('slot');
                 elementArtiste.innerHTML = `
@@ -16,6 +55,7 @@ function obtenirArtistes() {
         })
         .catch(error => console.error('Erreur lors de la récupération des artistes :', error));
 }
+
 
 function obtenirArtiste(artistId) {
     fetch(`/artist?id=${artistId}`)
@@ -59,36 +99,3 @@ window.onload = function() {
         obtenirArtistes();
     }
 };
-
-async function fetchArtists() {
-    const response = await fetch('../../API/');
-    const data = await response.json();
-    return data;
-  }
-
-  function filtreArtiste() {
-    fetchArtists().then(artists => {
-      const creationDate = document.getElementById('creationDate').value;
-      const firstAlbum = document.getElementById('firstAlbum').value;
-  
-      const selectedMembers = Array.from(document.querySelectorAll('input[name="members"]:checked')).map(el => el.value);
-      const selectedLocations = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(el => el.value);
-  
-      const filteredArtists = artists.filter(artist => {
-        const creationDateMatch = artist.creationDate >= creationDate;
-        const firstAlbumMatch = new Date(artist.firstAlbum) >= new Date(firstAlbum);
-  
-        const membersMatch = selectedMembers.length ? selectedMembers.includes(artist.members.length.toString()) : true;
-  
-        let locationsMatch = true;
-        if (selectedLocations.length) {
-          locationsMatch = false;
-        }
-  
-        return creationDateMatch && firstAlbumMatch && membersMatch && locationsMatch;
-      });
-  
-      displayArtists(filteredArtists);
-    });
-  }
-  
