@@ -25,21 +25,6 @@ function obtenirArtistes() {
 
                 return passesCreationDateFilter && passesFirstAlbumDateFilter && passesMembersFilter && passesLocationFilter;
             });
-            // Fonction pour initialiser les checkboxes de lieux de concerts (à appeler lors du chargement de la page)
-function initLocationCheckboxes(locations) {
-    const container = document.getElementById('locations-checkboxes');
-    locations.forEach(location => {
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = location;
-        const label = document.createElement('label');
-        label.textContent = location;
-        container.appendChild(checkbox);
-        container.appendChild(label);
-    });
-}
-// Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
-initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']);
 
             document.getElementById('listeArtistes').innerHTML = '';
             filteredArtistes.forEach(artiste => {
@@ -56,6 +41,34 @@ initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']);
         .catch(error => console.error('Erreur lors de la récupération des artistes :', error));
 }
 
+// Fonction pour initialiser les checkboxes de lieux de concerts (à appeler lors du chargement de la page)
+function initLocationCheckboxes(locations) {
+    const container = document.getElementById('locations-checkboxes');
+    container.innerHTML = ''; // Vider le conteneur avant d'ajouter de nouvelles checkboxes
+    locations.forEach(location => {
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = location;
+        const label = document.createElement('label');
+        label.textContent = location;
+        container.appendChild(checkbox);
+        container.appendChild(label);
+    });
+}
+
+// Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
+// Cela devrait être appelé une seule fois, par exemple, au chargement de la page
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const artistId = urlParams.get('id');
+
+    if (artistId) {
+        obtenirArtiste(artistId);
+    } else {
+        initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']); // Initialiser les checkboxes
+        obtenirArtistes();
+    }
+};
 
 function obtenirArtiste(artistId) {
     fetch(`/artist?id=${artistId}`)
@@ -88,14 +101,3 @@ function obtenirArtiste(artistId) {
         })
         .catch(error => console.error('Erreur lors de la récupération des détails de l\'artiste :', error));
 }
-
-window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const artistId = urlParams.get('id');
-
-    if (artistId) {
-        obtenirArtiste(artistId);
-    } else {
-        obtenirArtistes();
-    }
-};
