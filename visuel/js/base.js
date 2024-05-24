@@ -59,3 +59,36 @@ window.onload = function() {
         obtenirArtistes();
     }
 };
+
+async function fetchArtists() {
+    const response = await fetch('../../API/');
+    const data = await response.json();
+    return data;
+  }
+
+  function filtreArtiste() {
+    fetchArtists().then(artists => {
+      const creationDate = document.getElementById('creationDate').value;
+      const firstAlbum = document.getElementById('firstAlbum').value;
+  
+      const selectedMembers = Array.from(document.querySelectorAll('input[name="members"]:checked')).map(el => el.value);
+      const selectedLocations = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(el => el.value);
+  
+      const filteredArtists = artists.filter(artist => {
+        const creationDateMatch = artist.creationDate >= creationDate;
+        const firstAlbumMatch = new Date(artist.firstAlbum) >= new Date(firstAlbum);
+  
+        const membersMatch = selectedMembers.length ? selectedMembers.includes(artist.members.length.toString()) : true;
+  
+        let locationsMatch = true;
+        if (selectedLocations.length) {
+          locationsMatch = false;
+        }
+  
+        return creationDateMatch && firstAlbumMatch && membersMatch && locationsMatch;
+      });
+  
+      displayArtists(filteredArtists);
+    });
+  }
+  

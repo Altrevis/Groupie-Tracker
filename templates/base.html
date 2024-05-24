@@ -34,7 +34,46 @@
         </div>
     </header>
 
-      <div id="listeArtistes"></div>
+    <div id="filtre" class="filter-bar">
+      <div class="filter-group">
+        <label for="creationDateRange">Date de création:</label>
+        <input type="range" id="creationDateMin" name="creationDateMin" min="1950" max="2024">
+      </div>
+  
+      <div class="filter-group">
+        <label for="firstAlbumRange">First Album Date:</label>
+        <input type="date" id="firstAlbumMin" name="firstAlbumMin">
+      </div>
+  
+      <div class="filter-group">
+        <label>NOmbre de membres:</label>
+        <input type="checkbox" id="members1" name="members" value="1">
+        <label for="members1">1</label>
+        <input type="checkbox" id="members2" name="members" value="2">
+        <label for="members2">2</label>
+        <input type="checkbox" id="members3" name="members" value="3">
+        <label for="members3">3</label>
+        <input type="checkbox" id="members4" name="members" value="4">
+        <label for="members4">4</label>
+        <input type="checkbox" id="members5" name="members" value="5">
+        <label for="members5">5</label>
+      </div>
+  
+      <div class="filter-group">
+        <label>Localisation:</label>
+        <input type="checkbox" id="locationUSA" name="location" value="USA">
+        <label for="locationUSA">USA</label>
+        <input type="checkbox" id="locationEurope" name="location" value="Europe">
+        <label for="locationEurope">Europe</label>
+        <input type="checkbox" id="locationAsia" name="location" value="Asia">
+        <label for="locationAsia">Asie</label>
+      </div>
+  
+      <button class="filter-button" onclick="filtreArtiste()">Appliquer le filtre</button>
+    </div>
+    <div id="artistList"></div>
+  
+    <div id="listeArtistes"></div>
 
     <script src="../visuel/js/base.js"></script>
 
