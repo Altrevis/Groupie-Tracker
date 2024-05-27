@@ -7,6 +7,7 @@ function obtenirArtistes() {
     const membersMax = document.getElementById('members-max').value;
     const locationCheckboxes = document.querySelectorAll('#locations-checkboxes input:checked');
     const selectedLocations = Array.from(locationCheckboxes).map(cb => cb.value);
+    const artistName = document.getElementById('artist-name').value.toLowerCase();
 
     fetch('/artist')
         .then(response => response.json())
@@ -22,8 +23,9 @@ function obtenirArtistes() {
                 const passesMembersFilter = (!membersMin || numberOfMembers >= membersMin) &&
                                             (!membersMax || numberOfMembers <= membersMax);
                 const passesLocationFilter = selectedLocations.length === 0 || selectedLocations.some(location => artiste.locations.includes(location));
+                const passesNameFilter = !artistName || artiste.name.toLowerCase().includes(artistName);
 
-                return passesCreationDateFilter && passesFirstAlbumDateFilter && passesMembersFilter && passesLocationFilter;
+                return passesCreationDateFilter && passesFirstAlbumDateFilter && passesMembersFilter && passesLocationFilter && passesNameFilter;
             });
 
             document.getElementById('listeArtistes').innerHTML = '';
@@ -40,6 +42,7 @@ function obtenirArtistes() {
         })
         .catch(error => console.error('Erreur lors de la récupération des artistes :', error));
 }
+
 
 // Fonction pour initialiser les checkboxes de lieux de concerts (à appeler lors du chargement de la page)
 function initLocationCheckboxes(locations) {
