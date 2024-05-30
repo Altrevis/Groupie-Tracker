@@ -59,20 +59,6 @@ function initLocationCheckboxes(locations) {
     });
 }
 
-// Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
-// Cela devrait être appelé une seule fois, par exemple, au chargement de la page
-window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const artistId = urlParams.get('id');
-
-    if (artistId) {
-        obtenirArtiste(artistId);
-    } else {
-        initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']); // Initialiser les checkboxes
-        obtenirArtistes();
-    }
-};
-
 function obtenirArtiste(artistId) {
     fetch(`/artist?id=${artistId}`)
         .then(response => response.json())
@@ -101,6 +87,72 @@ function obtenirArtiste(artistId) {
                 `;
                 concertDates.appendChild(li);
             }
+
+            
+            initMap(artiste.concertDates);
         })
         .catch(error => console.error('Erreur lors de la récupération des détails de l\'artiste :', error));
 }
+
+function initMap(concertDates) {
+   
+    Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+        const map = new Microsoft.Maps.Map('#map', {
+            center: new Microsoft.Maps.Location(0, 0),
+            zoom: 2
+        });
+
+        const searchManager = new Microsoft.Maps.Search.SearchManager(map);
+        const geocodeRequest = [];
+
+        for (const date in concertDates) {
+            const location = concertDates[date];
+            geocodeRequest.push(geocodeLocation(location, map, searchManager));
+        }
+
+        Promise.all(geocodeRequest).then(results => {
+            const locations = results.filter(location => location !== null);
+            if (locations.length > 0) {
+                const bounds = Microsoft.Maps.LocationRect.fromLocations(locations);
+                map.setView({ bounds: bounds });
+            }
+        });
+    });
+}
+
+function geocodeLocation(location, map, searchManager) {
+    return new Promise((resolve, reject) => {
+        const requestOptions = {
+            where: location,
+            callback: function (geocodeResult) {
+                if (geocodeResult && geocodeResult.results && geocodeResult.results.length > 0) {
+                    const coordinates = geocodeResult.results[0].location;
+                    const pushpin = new Microsoft.Maps.Pushpin(coordinates);
+                    map.entities.push(pushpin);
+                    resolve(coordinates);
+                } else {
+                    resolve(null);
+                }
+            },
+            errorCallback: function (e) {
+                console.error('Geocode error:', e);
+                resolve(null);
+            }
+        };
+        searchManager.geocode(requestOptions);
+    });
+}
+
+// Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
+// Cela devrait être appelé une seule fois, par exemple, au chargement de la page
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const artistId = urlParams.get('id');
+
+    if (artistId) {
+        obtenirArtiste(artistId);
+    } else {
+        initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']); // Initialiser les checkboxes
+        obtenirArtistes();
+    }
+};
