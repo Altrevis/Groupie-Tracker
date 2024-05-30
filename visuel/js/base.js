@@ -28,7 +28,8 @@ function obtenirArtistes() {
                 return passesCreationDateFilter && passesFirstAlbumDateFilter && passesMembersFilter && passesLocationFilter && passesNameFilter;
             });
 
-            document.getElementById('listeArtistes').innerHTML = '';
+            const listeArtistes = document.getElementById('listeArtistes');
+            listeArtistes.innerHTML = '';
             filteredArtistes.forEach(artiste => {
                 const elementArtiste = document.createElement('div');
                 elementArtiste.classList.add('slot');
@@ -37,14 +38,12 @@ function obtenirArtistes() {
                     <img src="${artiste.image}" alt="${artiste.name}">
                     <a href="artist.html?id=${artiste.id}">voir plus</a>
                 `;
-                document.getElementById('listeArtistes').appendChild(elementArtiste);
+                listeArtistes.appendChild(elementArtiste);
             });
         })
         .catch(error => console.error('Erreur lors de la récupération des artistes :', error));
 }
 
-
-// Fonction pour initialiser les checkboxes de lieux de concerts (à appeler lors du chargement de la page)
 function initLocationCheckboxes(locations) {
     const container = document.getElementById('locations-checkboxes');
     container.innerHTML = ''; // Vider le conteneur avant d'ajouter de nouvelles checkboxes
@@ -79,23 +78,24 @@ function obtenirArtiste(artistId) {
             const concertDates = document.getElementById('concert-dates');
             concertDates.innerHTML = '';
             for (const date in artiste.concertDates) {
-                const li = document.createElement('li');
-                li.classList.add('collection-item');
-                li.innerHTML = `
-                    ${date}
-                    <span class="secondary-content location">${artiste.concertDates[date]}</span>
-                `;
-                concertDates.appendChild(li);
+                const locations = artiste.concertDates[date];
+                locations.forEach(location => {
+                    const li = document.createElement('li');
+                    li.classList.add('collection-item');
+                    li.innerHTML = `
+                        ${date}
+                        <span class="secondary-content location">${location}</span>
+                    `;
+                    concertDates.appendChild(li);
+                });
             }
 
-            
             initMap(artiste.concertDates);
         })
         .catch(error => console.error('Erreur lors de la récupération des détails de l\'artiste :', error));
 }
 
 function initMap(concertDates) {
-   
     Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
         const map = new Microsoft.Maps.Map('#map', {
             center: new Microsoft.Maps.Location(0, 0),
@@ -103,14 +103,16 @@ function initMap(concertDates) {
         });
 
         const searchManager = new Microsoft.Maps.Search.SearchManager(map);
-        const geocodeRequest = [];
+        const geocodeRequests = [];
 
         for (const date in concertDates) {
-            const location = concertDates[date];
-            geocodeRequest.push(geocodeLocation(location, map, searchManager));
+            const locations = concertDates[date];
+            locations.forEach(location => {
+                geocodeRequests.push(geocodeLocation(location, map, searchManager));
+            });
         }
 
-        Promise.all(geocodeRequest).then(results => {
+        Promise.all(geocodeRequests).then(results => {
             const locations = results.filter(location => location !== null);
             if (locations.length > 0) {
                 const bounds = Microsoft.Maps.LocationRect.fromLocations(locations);
