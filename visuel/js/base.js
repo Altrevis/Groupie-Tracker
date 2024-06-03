@@ -78,72 +78,70 @@ function obtenirArtiste(artistId) {
             const concertDates = document.getElementById('concert-dates');
             concertDates.innerHTML = '';
             for (const date in artiste.concertDates) {
-                const locations = artiste.concertDates[date];
-                locations.forEach(location => {
-                    const li = document.createElement('li');
-                    li.classList.add('collection-item');
-                    li.innerHTML = `
-                        ${date}
-                        <span class="secondary-content location">${location}</span>
-                    `;
-                    concertDates.appendChild(li);
-                });
+                const li = document.createElement('li');
+                li.classList.add('collection-item');
+                li.innerHTML = `
+                    ${date}
+                    <span class="secondary-content location">${artiste.concertDates[date]}</span>
+                `;
+                concertDates.appendChild(li);
             }
 
-            initMap(artiste.concertDates);
+            initMap(artiste.locations);
         })
         .catch(error => console.error('Erreur lors de la récupération des détails de l\'artiste :', error));
 }
 
-function initMap(concertDates) {
-    Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
-        const map = new Microsoft.Maps.Map('#map', {
-            center: new Microsoft.Maps.Location(0, 0),
-            zoom: 2
-        });
 
-        const searchManager = new Microsoft.Maps.Search.SearchManager(map);
-        const geocodeRequests = [];
 
-        for (const date in concertDates) {
-            const locations = concertDates[date];
-            locations.forEach(location => {
-                geocodeRequests.push(geocodeLocation(location, map, searchManager));
+function initMap() {
+    const map = L.map('map').setView([48.8566, 2.3522], 2); 
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const artistId = urlParams.get('id');
+
+    if (!artistId) {
+        console.error('No artist ID provided in URL.');
+        return;
+    }
+
+    const apiUrl = `https://groupietrackers.herokuapp.com/api/locations/${artistId}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            data.locations.forEach(location => {
+                geocodeLocation(location, map);
             });
-        }
-
-        Promise.all(geocodeRequests).then(results => {
-            const locations = results.filter(location => location !== null);
-            if (locations.length > 0) {
-                const bounds = Microsoft.Maps.LocationRect.fromLocations(locations);
-                map.setView({ bounds: bounds });
-            }
-        });
-    });
+        })
+        .catch(error => console.error('Error fetching artist locations:', error));
 }
 
-function geocodeLocation(location, map, searchManager) {
-    return new Promise((resolve, reject) => {
-        const requestOptions = {
-            where: location,
-            callback: function (geocodeResult) {
-                if (geocodeResult && geocodeResult.results && geocodeResult.results.length > 0) {
-                    const coordinates = geocodeResult.results[0].location;
-                    const pushpin = new Microsoft.Maps.Pushpin(coordinates);
-                    map.entities.push(pushpin);
-                    resolve(coordinates);
-                } else {
-                    resolve(null);
-                }
-            },
-            errorCallback: function (e) {
-                console.error('Geocode error:', e);
-                resolve(null);
+function geocodeLocation(location, map) {
+    const openCageApiKey = 'c2d0683dd5c04916bd6d587fe06880e6'; 
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${openCageApiKey}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                const coords = data.results[0].geometry;
+                L.marker([coords.lat, coords.lng]).addTo(map)
+                    .bindPopup(location.replace('-', ', ').replace('_', ' '));
+            } else {
+                console.error('No results found for location:', location);
             }
-        };
-        searchManager.geocode(requestOptions);
-    });
+        })
+        .catch(error => console.error('Error geocoding location:', error));
 }
+
+
+
+
 
 // Exemple d'appel pour initialiser les checkboxes avec des lieux de concerts disponibles
 // Cela devrait être appelé une seule fois, par exemple, au chargement de la page
@@ -156,5 +154,6 @@ window.onload = function() {
     } else {
         initLocationCheckboxes(['Paris', 'New York', 'Tokyo', 'London']); // Initialiser les checkboxes
         obtenirArtistes();
+        initMap();
     }
 };
