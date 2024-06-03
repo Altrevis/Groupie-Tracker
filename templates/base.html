@@ -33,41 +33,46 @@
         </div>
       </header>
 
-      <section class="filters">
+      <section class="decorative-block">
         <h3>Filtres</h3>
-        <div>
-            <label for="artist-name">Nom de l'artiste :</label>
-            <input type="text" id="artist-name" placeholder="Rechercher par nom">
-        </div>
-        <button onclick="obtenirArtistes()">Filtrer</button>
-    </section>
-    
-
-      <section class="filters">
-        <h3>Filtres</h3>
-        <div>
-            <label for="creation-date-range">Date de création :</label>
-            <input type="number" id="creation-date-min" placeholder="Min">
-            <input type="number" id="creation-date-max" placeholder="Max">
-        </div>
-        <div>
-            <label for="first-album-date-range">Date du premier album :</label>
-            <input type="number" id="first-album-date-min" placeholder="Min">
-            <input type="number" id="first-album-date-max" placeholder="Max">
-        </div>
-        <div>
-            <label for="number-of-members-range">Nombre de membres :</label>
-            <input type="number" id="members-min" placeholder="Min">
-            <input type="number" id="members-max" placeholder="Max">
-        </div>
-        <div>
-            <label>Lieux de concerts :</label>
-            <div id="locations-checkboxes">
-                <!-- Les checkboxes pour les lieux de concerts seront ajoutées ici -->
+        <div class="filters-container">
+            <div class="filters">
+                <div>
+                    <label for="artist-name">Nom de l'artiste :</label>
+                    <input type="text" id="artist-name" placeholder="Rechercher par nom">
+                </div>
+                <button onclick="obtenirArtistes()">Filtrer</button>
+            </div>
+            
+            <div class="filters">
+                <div>
+                    <label for="creation-date-range">Date de création :</label>
+                    <input type="number" id="creation-date-min" placeholder="Min">
+                    <input type="number" id="creation-date-max" placeholder="Max">
+                </div>
+                <div>
+                    <label for="first-album-date-range">Date du premier album :</label>
+                    <input type="number" id="first-album-date-min" placeholder="Min">
+                    <input type="number" id="first-album-date-max" placeholder="Max">
+                </div>
+                <div>
+                    <label for="number-of-members-range">Nombre de membres :</label>
+                    <input type="number" id="members-min" placeholder="Min">
+                    <input type="number" id="members-max" placeholder="Max">
+                </div>
+            </div>
+            
+            <div class="filters">
+                <div>
+                    <label>Lieux de concerts :</label>
+                    <div id="locations-checkboxes">
+                        <!-- Les checkboxes pour les lieux de concerts seront ajoutées ici -->
+                    </div>
+                </div>
+                <button onclick="obtenirArtistes()">Filtrer</button>
             </div>
         </div>
-        <button onclick="obtenirArtistes()">Filtrer</button>
-    </section>
+    </section>    
     
       <div id="listeArtistes"></div>
 

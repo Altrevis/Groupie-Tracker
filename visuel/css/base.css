@@ -33,15 +33,25 @@ h4{
   color: #f8b700;
   margin-bottom: 0.8em;
 }
-.filters {
+.decorative-block {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 20px;
   border-radius: 10px;
   margin: 20px;
+  text-align: center;
 }
 
-.filters h3 {
-  margin-bottom: 10px;
+.filters-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.filters {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+  text-align: left;
 }
 
 .filters div {
@@ -52,15 +62,17 @@ h4{
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #fff;
 }
 
-.filters input[type="number"] {
+.filters input[type="number"],
+.filters input[type="text"] {
   background-color: #333;
   color: #fff;
   border: 1px solid #555;
   padding: 5px;
   border-radius: 5px;
-  width: 100px;
+  width: 100%;
 }
 
 .filters input[type="checkbox"] {
@@ -71,15 +83,18 @@ h4{
   background-color: #1e90ff;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  display: block;
+  margin-top: 10px;
 }
 
 .filters button:hover {
   background-color: #1c86ee;
 }
+
 header{
   height: 80vh;
   background-color: #000000;
