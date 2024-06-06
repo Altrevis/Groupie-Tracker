@@ -179,21 +179,9 @@ article{
   height: 64px;
 }
 
-.menu-items {
-  order: 2;
-  display: flex;
-}
 .logo {
   order: 1;
   font-size: 1.8rem;
-}
-
-.menu-items li{
-  list-style: none;
-  margin-left: 1.5rem;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
 }
 
 .navbar a {
@@ -269,7 +257,7 @@ article{
     transition: transform 0.3s ease-in-out;
   }
 
-  .navbar .menu-items {
+  .navbar {
     padding-top: 100px;
     background: #24252a;
     height: 100vh;
@@ -283,7 +271,7 @@ article{
     overflow: scroll;
   }
 
-  .navbar .menu-items li {
+  .navbar {
     margin-bottom: 1.8rem;
     font-size: 1rem;
     font-weight: 500;
@@ -294,10 +282,6 @@ article{
     top: 12px;
     right: 15px;
     font-size: 1.7rem;
-  }
-
-  .navbar-container input[type="checkbox"]:checked ~ .menu-items {
-    transform: translateX(0);
   }
 
   .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
@@ -325,15 +309,15 @@ article{
 }
 
 .slot {
-border: 5px solid #cccccc; /* Bordure de 2px solide grise */
-padding: 6%; /* Espace intérieur de 10px autour du contenu */
+border: 5px solid #cccccc;
+padding: 6%;
 }
 .slot a {
 color: #f8b700;
 }
 .button {
-border: 2px solid #cccccc; /* Bordure de 2px solide grise */
-padding: 2%; /* Espace intérieur de 10px autour du contenu */
+border: 2px solid #cccccc;
+padding: 2%;
 background-color: #0ac2f9;
 color: #f8b700;
 }

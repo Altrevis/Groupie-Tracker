@@ -34,7 +34,7 @@ function obtenirArtistes() {
                 const elementArtiste = document.createElement('div');
                 elementArtiste.classList.add('slot');
                 elementArtiste.innerHTML = `
-                    <h2>${artiste.name}</h2>
+                    <h3>${artiste.name}</h3>
                     <img src="${artiste.image}" alt="${artiste.name}">
                     <a href="artist.html?id=${artiste.id}">voir plus</a>
                 `;
